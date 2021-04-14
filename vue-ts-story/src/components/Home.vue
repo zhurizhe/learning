@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
+    <h1>Home</h1>
 
     <button @click="count++">count is: {{ count }}</button>
   </div>
@@ -9,11 +9,11 @@
 <script lang="ts">
 import { ref, defineComponent } from "vue";
 export default defineComponent({
-  name: "HelloWorld",
+  name: "Home",
   props: {
     msg: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   setup: () => {
