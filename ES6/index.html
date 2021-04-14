@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ES6</title>
+    </head>
+    <body>
+        <div id="console"></div>
+        <script>
+
+            const log = function () {
+                document
+                    .querySelector('#console')
+                    .innerText += (Array.from(arguments).join(',') + "\r\n")
+            };
+            class Human {
+                constructor(name) {
+                    this.kind = 'people';
+                    this.name = name;
+                }
+
+                walk() {
+                    log(this.name + ' is walking');
+                }
+            }
+            Object.assign(Human.prototype, {
+                speak() {
+                    log(this.name + ' is speaking');
+                },
+                eat() {
+                    log(this.name + ' is eating');
+                }
+            });
+
+            class Man extends Human {
+                constructor(name) {
+                    super(name);
+                    this.sex = 'male';
+                }
+
+                getSex() {
+                    log(this.name + "'sex is " + this.sex);
+                }
+            }
+
+            let me = new Man('James');
+
+            me.walk();
+            me.eat();
+            me.speak();
+            me.getSex();
+
+            
+
+            log('Object.keys(Human.prototype)', JSON.stringify(Object.keys(Human.prototype)));
+
+            log('Object.getOwnPropertyNames(Man.prototype)', JSON.stringify(Object.getOwnPropertyNames(Human.prototype)));
+        </script>
+    </body>
+</html>
