@@ -39,7 +39,11 @@
                     super(name);
                     this.sex = 'male';
                 }
-
+                canNotChange(key) {
+                    const keys = ['sex'];
+                    console.log(keys.indexOf(key))
+                    return keys.indexOf(key)>=0;
+                }
                 getSex() {
                     log(this.name + "'sex is " + this.sex);
                 }
@@ -52,8 +56,27 @@
             me.speak();
             me.getSex();
 
-            
+            var logHandler = {
+                get: function (target, key) {
+                    log(`${key} 被读取`);
+                    return target[key];
+                },
+                set: function (target, key, value) {
+                    if (target.canNotChange(key)) {
+                        log(`${key} 不可改变`);
 
+                        return false;
+                    } else {
+                        target[key] = value;
+
+                        log(`${key} 被设置为 ${value}`);
+                    }
+                }
+            }
+            const meProxy = new Proxy(me, logHandler);
+            log('meProxy.sex = "female";')
+            meProxy.sex = "female";
+            meProxy.getSex();
             log('Object.keys(Human.prototype)', JSON.stringify(Object.keys(Human.prototype)));
 
             log('Object.getOwnPropertyNames(Man.prototype)', JSON.stringify(Object.getOwnPropertyNames(Human.prototype)));
