@@ -9,12 +9,19 @@
 
     <ul>
       <li v-for="todo in todos" :key="todo.id">
-        <a-checkbox v-model:checked="todo.checked"
-          >{{ todo.content
-          }}<a-button class="del" @click="deleteTodo(todo)"
-            >删除</a-button
-          ></a-checkbox
+        <a-checkbox 
+          v-if="todo.content.indexOf(newTodo) >= 0 && !todo.editing" 
+          v-model:checked="todo.checked"
         >
+          {{ todo.content }}
+          <a-button class="del" @click="deleteTodo(todo)">删除</a-button>
+          <a-button class="edit" @click="editTodo(todo)">编辑</a-button>
+        </a-checkbox>
+        <a-input v-if="todo.editing" v-model:value="todo.content">
+          <template #addonAfter>
+            <span @click="saveTodo(todo)">确认</span>
+          </template>
+        </a-input>
       </li>
     </ul>
   </div>
@@ -31,6 +38,7 @@ interface Todo {
   id: Number;
   content: String;
   checked: Boolean;
+  editing: Boolean;
 }
 export default defineComponent({
   name: "Todo",
@@ -64,7 +72,14 @@ export default defineComponent({
       const index = todos.value.findIndex((t) => t === todo);
       todos.value.splice(index, 1);
     };
-    return { todos, newTodo, addTodo, deleteTodo };
+
+    const editTodo = (todo: Todo) => {
+      todo.editing = true;
+    };
+    const saveTodo = (todo: Todo) => {
+      todo.editing = false;
+    };
+    return { todos, newTodo, addTodo, deleteTodo, editTodo, saveTodo };
   },
 });
 </script>
