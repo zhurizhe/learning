@@ -1,14 +1,17 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div id="app">
+    <a-menu mode="inline">
+      <a-menu-item>
+        <router-link to="/">Home</router-link> |
+      </a-menu-item>
+      <a-menu-item>
+      <router-link to="/Todo">Todo</router-link>
+      </a-menu-item>
+    </a-menu>
+   
+    <router-view/>
+  </div>
 </template>
-
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
-</script>
 
 <style>
 #app {
@@ -17,6 +20,12 @@ import HelloWorld from './components/HelloWorld.vue'
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
+  display: flex;
+  flex-direction: row;
+}
+#app .ant-menu-inline{
+  width: 20%;
+  min-width: 200px;
 }
 </style>
