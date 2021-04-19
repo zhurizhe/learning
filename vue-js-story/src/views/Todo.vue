@@ -16,7 +16,7 @@
           v-if="todo.content.indexOf(newTodo) >= 0 && !todo.editing" 
           v-model="todo.checked"
         >
-          {{ todo.content }}
+          <span class="content">{{ todo.content }}</span>
           <a-icon type="delete" @click="deleteTodo(todo)"/>
           <a-icon type="edit" @click="editTodo(todo)"/>
          
@@ -50,20 +50,40 @@ export default {
           editing:false
         });
         this.$set(this, 'newTodo', '');
+        this.saveToLocalStorage();
+
       }
+    },
+    saveToLocalStorage () {
+      let saveData = JSON.stringify(this.todos);
+      localStorage.todos = saveData;
     },
     deleteTodo(todo) {
        let { todos} = this;
       const index = todos.findIndex((t) => t === todo);
       todos.splice(index, 1);
+      this.saveToLocalStorage();
     },
     editTodo(todo) {
       todo.editing = true;
+      this.saveToLocalStorage();
     },
     saveTodo(todo){
       todo.editing = false;
+      this.saveToLocalStorage();
     },
-  }
+  },
+  mounted(){
+    if (localStorage.todos) {
+        let data = JSON.parse(localStorage.todos);
+        if (Array.isArray(data)) {
+          this.todos = data;
+        }
+      }
+  },
+  beforeDestroy() {
+    this.saveToLocalStorage()
+  },
 }
 </script>
 <style lang="postcss" scoped>
@@ -102,10 +122,20 @@ li {
 }
 .ant-checkbox-wrapper {
   width: 100%;
+  display: flex;
+}
+/deep/.ant-checkbox + span{
+    display: flex;
+}
+/deep/.ant-checkbox + span span:first-child{
+    width: max-content;
+    min-width: 200px;
 }
 /deep/.ant-checkbox-checked + span {
   text-decoration: line-through;
+ 
 }
+
 li .ant-btn {
   margin-left: 10px;
 }

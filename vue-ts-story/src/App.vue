@@ -1,16 +1,12 @@
 <template>
 <div id="main">
   <a-menu mode="inline">
-    <a-sub-menu>
-      <template #title>
+    <a-menu-item>
         <router-link  to="/">首页</router-link>
-      </template>
-    </a-sub-menu>
-    <a-sub-menu>
-      <template #title>
+    </a-menu-item>
+    <a-menu-item>
         <router-link  to="/Todo">Todo</router-link>
-      </template>
-    </a-sub-menu>
+    </a-menu-item>
   </a-menu>
   <router-view />
 
