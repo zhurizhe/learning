@@ -49,7 +49,7 @@ export default {
           checked: false,
           editing:false
         });
-        this.$set(this, 'newTodo', '');
+        this.newTodo = '';
         this.saveToLocalStorage();
 
       }
