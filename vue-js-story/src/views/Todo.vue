@@ -135,7 +135,16 @@ li {
   text-decoration: line-through;
  
 }
-
+/deep/.ant-checkbox:hover::after{
+  border: none;
+}
+/deep/.ant-checkbox-inner{
+  top:4px;
+}
+/deep/.anticon{
+  display: flex;
+  align-items: center;
+}
 li .ant-btn {
   margin-left: 10px;
 }

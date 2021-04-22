@@ -148,6 +148,16 @@ li {
   text-decoration: line-through;
  
 }
+:deep .ant-checkbox-checked::after{
+  border: none;
+}
+:deep .ant-checkbox-inner{
+  top:4px;
+}
+:deep .anticon{
+  display: flex;
+  align-items: center;
+}
 li .ant-btn {
   margin-left: 10px;
 }
