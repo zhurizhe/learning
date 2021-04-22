@@ -16,9 +16,10 @@
                     .innerText += (Array.from(arguments).join(',') + "\r\n")
             };
             class Human {
-                constructor(name) {
+                constructor(name, age = 0) {
                     this.kind = 'people';
                     this.name = name;
+                    this.age = age;
                 }
 
                 walk() {
@@ -35,9 +36,10 @@
             });
 
             class Man extends Human {
-                constructor(name) {
-                    super(name);
+                constructor(name,age) {
+                    super(name,age);
                     this.sex = 'male';
+                    this.kind = 'man';
                 }
                 canNotChange(key) {
                     const keys = ['sex'];
@@ -49,7 +51,7 @@
                 }
             }
 
-            let me = new Man('James');
+            let me = new Man('James', 20);
 
             me.walk();
             me.eat();
@@ -67,9 +69,29 @@
 
                         return false;
                     } else {
-                        target[key] = value;
-
-                        log(`${key} 被设置为 ${value}`);
+                        if(key === 'age'){
+                            if(target.kind === 'man'){
+                                if(value > 150){
+                                    log(`男人的${key} 不能为 ${value}`);
+                                    return false;
+                                }else{
+                                    target[key] = value;
+                                    log(`${key} 被设置为 ${value}`);
+                                }
+                            }else{
+                                if(value > 18){
+                                    log(`男孩的${key} 不能为 ${value}`);
+                                    return false;
+                                }else{
+                                    target[key] = value;
+                                    log(`${key} 被设置为 ${value}`);
+                                }
+                            }
+                            
+                        }else{
+                            target[key] = value;
+                            log(`${key} 被设置为 ${value}`);
+                        }
                     }
                 }
             }
@@ -79,7 +101,23 @@
             meProxy.getSex();
             log('Object.keys(Human.prototype)', JSON.stringify(Object.keys(Human.prototype)));
 
-            log('Object.getOwnPropertyNames(Man.prototype)', JSON.stringify(Object.getOwnPropertyNames(Human.prototype)));
+            log('Object.getOwnPropertyNames(Human.prototype)', JSON.stringify(Object.getOwnPropertyNames(Human.prototype)));
+
+            meProxy.age = 201;
+
+            class Boy extends Man {
+                constructor(name, age = 0) {
+                    super(name,age);
+
+                    this.kind = 'people';
+                    this.name = name;
+                }
+            }
+
+            const boyProxy = new Proxy(new Boy('boy',12),logHandler);
+
+            boyProxy.age = 19;
+
         </script>
     </body>
 </html>
