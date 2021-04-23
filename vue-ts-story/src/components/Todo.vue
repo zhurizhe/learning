@@ -15,10 +15,12 @@
         <a-checkbox 
           v-if="todo.content.indexOf(newTodo) >= 0 && !todo.editing" 
           v-model:checked="todo.checked"
+          @change="saveToLocalStorage()"
         >
           <span class="content">{{ todo.content }}</span>
           <delete-outlined @click="deleteTodo(todo)" />
           <form-outlined @click="editTodo(todo)" />
+          <calendar-outlined />
         </a-checkbox>
         <a-input v-if="todo.editing" v-model:value="todo.content">
           <template #addonAfter>
@@ -37,7 +39,7 @@ import {
   onBeforeMount,
 } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
-import { DeleteOutlined, FormOutlined } from "@ant-design/icons-vue";
+import { DeleteOutlined, FormOutlined, CalendarOutlined } from "@ant-design/icons-vue";
 interface Todo {
   id: Number;
   content: String;
@@ -49,6 +51,7 @@ export default defineComponent({
   components:{
     DeleteOutlined,
     FormOutlined,
+    CalendarOutlined,
   },
   setup() {
     const todos = ref<Todo[]>([]);
@@ -93,7 +96,7 @@ export default defineComponent({
       todo.editing = false;
       saveToLocalStorage();
     };
-    return { todos, newTodo, addTodo, deleteTodo, editTodo, saveTodo };
+    return { todos, newTodo, addTodo, deleteTodo, editTodo, saveTodo,saveToLocalStorage };
   },
 });
 </script>
