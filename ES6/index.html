@@ -8,6 +8,9 @@
     </head>
     <body>
         <div id="console"></div>
+
+        <input value="" id="age" type="number" min="0">
+        <p>男孩的年龄是<span id="boyAge">--</span>岁</p>
         <script>
 
             const log = function () {
@@ -76,7 +79,7 @@
                                     return false;
                                 }else{
                                     target[key] = value;
-                                    log(`${key} 被设置为 ${value}`);
+                                    log(`男人的${key} 被设置为 ${value}`);
                                 }
                             }else{
                                 if(value > 18){
@@ -84,13 +87,14 @@
                                     return false;
                                 }else{
                                     target[key] = value;
-                                    log(`${key} 被设置为 ${value}`);
+                                    log(`男孩的${key} 被设置为 ${value}`);
+                                    document.querySelector("#boyAge").innerText = value || '--';
                                 }
                             }
                             
                         }else{
                             target[key] = value;
-                            log(`${key} 被设置为 ${value}`);
+                            log(`${target.kind}的${key} 被设置为 ${value}`);
                         }
                     }
                 }
@@ -102,7 +106,7 @@
             log('Object.keys(Human.prototype)', JSON.stringify(Object.keys(Human.prototype)));
 
             log('Object.getOwnPropertyNames(Human.prototype)', JSON.stringify(Object.getOwnPropertyNames(Human.prototype)));
-
+            log('meProxy.age = 201')
             meProxy.age = 201;
 
             class Boy extends Man {
@@ -115,9 +119,12 @@
             }
 
             const boyProxy = new Proxy(new Boy('boy',12),logHandler);
-
+            log('boyProxy.age = 19')
             boyProxy.age = 19;
 
+
+            document.querySelector("#age").onkeyup = function(e){boyProxy.age=e.target.value};
+            document.querySelector("#age").onchange = function(e){boyProxy.age=e.target.value};
         </script>
     </body>
 </html>
